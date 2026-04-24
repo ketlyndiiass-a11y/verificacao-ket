@@ -10,37 +10,60 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Segoe UI', sans-serif;
     }
 
     body {
       height: 100vh;
       display: flex;
-      align-items: center;
+      align-items: flex-end; /* JOGA CARD PRA BAIXO */
       justify-content: center;
-      background: radial-gradient(circle at top, #1a1a2e, #05040a);
+      background: url('17.jpg') center/cover no-repeat;
+      position: relative;
       color: #fff;
     }
 
-    .card {
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(20px);
-      border-radius: 20px;
-      padding: 30px 25px;
-      width: 100%;
-      max-width: 380px;
-      text-align: center;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.7);
-      animation: fadeIn 0.8s ease;
+    /* OVERLAY */
+    body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.2));
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    /* CARD */
+    .card {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 420px;
+      margin-bottom: 30px;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      padding: 25px 20px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+
+      /* INICIA ESCONDIDO */
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    /* ANIMAÇÃO */
+    .show {
+      animation: showCard 0.8s ease forwards;
+    }
+
+    @keyframes showCard {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     h1 {
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       margin-bottom: 10px;
       background: linear-gradient(135deg, #ff006f, #ff9800);
       -webkit-background-clip: text;
@@ -48,8 +71,8 @@
     }
 
     p {
-      font-size: 0.95rem;
-      color: #ccc;
+      font-size: 0.9rem;
+      color: #ddd;
       margin-bottom: 18px;
     }
 
@@ -66,12 +89,11 @@
       width: 18px;
       height: 18px;
       accent-color: #ff006f;
-      cursor: pointer;
     }
 
     button {
       width: 100%;
-      padding: 14px;
+      padding: 15px;
       border: none;
       border-radius: 999px;
       font-size: 1rem;
@@ -79,48 +101,41 @@
       cursor: pointer;
       background: linear-gradient(135deg, #ff006f, #ff9800);
       color: #fff;
-      transition: all 0.25s ease;
-      box-shadow: 0 5px 20px rgba(255,0,111,0.4);
-    }
-
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(255,0,111,0.6);
+      box-shadow: 0 8px 30px rgba(255,0,111,0.5);
+      transition: 0.25s;
     }
 
     button:active {
-      transform: scale(0.97);
+      transform: scale(0.96);
     }
 
     .loader {
-      margin-top: 15px;
+      margin-top: 12px;
       display: none;
       font-size: 0.85rem;
-      color: #aaa;
-    }
-
-    .dots::after {
-      content: '';
-      animation: dots 1.5s infinite;
-    }
-
-    @keyframes dots {
-      0% { content: ''; }
-      33% { content: '.'; }
-      66% { content: '..'; }
-      100% { content: '...'; }
+      color: #ccc;
     }
 
     .footer {
-      margin-top: 12px;
+      margin-top: 10px;
       font-size: 0.75rem;
-      color: #777;
+      color: #bbb;
     }
+
+    /* MOBILE AJUSTE */
+    @media (max-width: 480px) {
+      .card {
+        border-radius: 20px 20px 0 0;
+        margin-bottom: 0;
+      }
+    }
+
   </style>
 </head>
 <body>
 
-  <div class="card">
+  <div class="card" id="card">
+
     <h1>ACESSO PARA MAIORES DE 18</h1>
     <p>Confirme que você tem idade legal para continuar.</p>
 
@@ -132,17 +147,24 @@
     <button id="btn">Tenho +18 anos</button>
 
     <div class="loader" id="loader">
-      Verificando<span class="dots"></span>
+      Verificando...
     </div>
 
     <div class="footer">
       Ao continuar você declara que tem pelo menos 18 anos
     </div>
+
   </div>
 
   <script>
     const btn = document.getElementById('btn');
     const loader = document.getElementById('loader');
+    const card = document.getElementById('card');
+
+    // ⏱️ Delay de 2 segundos
+    setTimeout(() => {
+      card.classList.add('show');
+    }, 2000);
 
     btn.addEventListener('click', () => {
       btn.style.display = 'none';
