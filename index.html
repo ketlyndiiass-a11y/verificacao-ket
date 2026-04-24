@@ -1,147 +1,170 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Acesso 18+</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acesso 18+</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-    }
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
 
-    body {
-      height: 100vh;
-      display: flex;
-      align-items: flex-end; /* JOGA CARD PRA BAIXO */
-      justify-content: center;
-      background: url('17.jpg') center/cover no-repeat;
-      position: relative;
-      color: #fff;
-    }
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #000;
+  color: #fff;
+}
 
-    /* OVERLAY */
-    body::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.2));
-    }
+/* BLOQUEIO DESKTOP */
+.desktop-block {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  color: #fff;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  z-index: 9999;
+}
 
-    /* CARD */
-    .card {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      max-width: 420px;
-      margin-bottom: 30px;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(15px);
-      border-radius: 20px;
-      padding: 25px 20px;
-      text-align: center;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+/* TOPO (IMAGEM) */
+.top {
+  height: 58vh;
+  background: url('17.jpg') center/cover no-repeat;
+  position: relative;
+}
 
-      /* INICIA ESCONDIDO */
-      opacity: 0;
-      transform: translateY(40px);
-    }
+.top::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 120px;
+  background: linear-gradient(to bottom, transparent, #000);
+}
 
-    /* ANIMAÇÃO */
-    .show {
-      animation: showCard 0.8s ease forwards;
-    }
+/* PARTE DE BAIXO */
+.bottom {
+  height: 42vh;
+  background: #000;
+  display: flex;
+  align-items: flex-start; /* SUBIU O BLOCO */
+  justify-content: center;
+  padding: 10px 20px 20px;
+}
 
-    @keyframes showCard {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+/* CARD */
+.card {
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
 
-    h1 {
-      font-size: 1.5rem;
-      margin-bottom: 10px;
-      background: linear-gradient(135deg, #ff006f, #ff9800);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+  opacity: 0;
+  transform: translateY(40px);
+}
 
-    p {
-      font-size: 0.9rem;
-      color: #ddd;
-      margin-bottom: 18px;
-    }
+.show {
+  animation: showCard 0.8s ease forwards;
+}
 
-    .check {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin-bottom: 20px;
-      font-size: 0.9rem;
-    }
+@keyframes showCard {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-    input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      accent-color: #ff006f;
-    }
+h1 {
+  font-size: 1.35rem;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #ff006f, #ff9800);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
-    button {
-      width: 100%;
-      padding: 15px;
-      border: none;
-      border-radius: 999px;
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
-      background: linear-gradient(135deg, #ff006f, #ff9800);
-      color: #fff;
-      box-shadow: 0 8px 30px rgba(255,0,111,0.5);
-      transition: 0.25s;
-    }
+p {
+  font-size: 0.85rem;
+  color: #ccc;
+  margin-bottom: 14px;
+}
 
-    button:active {
-      transform: scale(0.96);
-    }
+/* CHECK */
+.check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  font-size: 0.85rem;
+}
 
-    .loader {
-      margin-top: 12px;
-      display: none;
-      font-size: 0.85rem;
-      color: #ccc;
-    }
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #ff006f;
+}
 
-    .footer {
-      margin-top: 10px;
-      font-size: 0.75rem;
-      color: #bbb;
-    }
+/* BOTÃO */
+button {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #ff006f, #ff9800);
+  color: #fff;
+  box-shadow: 0 8px 25px rgba(255,0,111,0.5);
+}
 
-    /* MOBILE AJUSTE */
-    @media (max-width: 480px) {
-      .card {
-        border-radius: 20px 20px 0 0;
-        margin-bottom: 0;
-      }
-    }
+button:active {
+  transform: scale(0.96);
+}
 
-  </style>
+.loader {
+  margin-top: 10px;
+  display: none;
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+.footer {
+  margin-top: 8px;
+  font-size: 0.7rem;
+  color: #777;
+}
+</style>
 </head>
+
 <body>
 
+<!-- BLOQUEIO PARA DESKTOP -->
+<div class="desktop-block" id="desktopBlock">
+  <div>
+    <h2>Acesse pelo celular</h2>
+    <p>Este conteúdo está disponível apenas em dispositivos móveis.</p>
+  </div>
+</div>
+
+<div class="top"></div>
+
+<div class="bottom">
   <div class="card" id="card">
 
     <h1>ACESSO PARA MAIORES DE 18</h1>
     <p>Confirme que você tem idade legal para continuar.</p>
 
     <div class="check">
-      <input type="checkbox" checked id="check">
-      <label for="check">Não sou robô</label>
+      <input type="checkbox" checked>
+      <span>Não sou robô</span>
     </div>
 
     <button id="btn">Tenho +18 anos</button>
@@ -155,26 +178,37 @@
     </div>
 
   </div>
+</div>
 
-  <script>
-    const btn = document.getElementById('btn');
-    const loader = document.getElementById('loader');
-    const card = document.getElementById('card');
+<script>
+const card = document.getElementById('card');
+const btn = document.getElementById('btn');
+const loader = document.getElementById('loader');
+const desktopBlock = document.getElementById('desktopBlock');
 
-    // ⏱️ Delay de 2 segundos
-    setTimeout(() => {
-      card.classList.add('show');
-    }, 2000);
+/* DETECTA DESKTOP */
+function isMobile() {
+  return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
 
-    btn.addEventListener('click', () => {
-      btn.style.display = 'none';
-      loader.style.display = 'block';
+if (!isMobile()) {
+  desktopBlock.style.display = 'flex';
+}
 
-      setTimeout(() => {
-        window.location.href = "https://t.me/KettFreris_bot";
-      }, 1500);
-    });
-  </script>
+/* DELAY 2s */
+setTimeout(() => {
+  card.classList.add('show');
+}, 2000);
+
+btn.addEventListener('click', () => {
+  btn.style.display = 'none';
+  loader.style.display = 'block';
+
+  setTimeout(() => {
+    window.location.href = "https://t.me/KettFreris_bot";
+  }, 1500);
+});
+</script>
 
 </body>
 </html>
