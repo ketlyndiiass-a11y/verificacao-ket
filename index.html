@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Acesso 18+</title>
+<title>Acesso</title>
+
+<!-- acelera carregamento do destino -->
+<link rel="preconnect" href="https://t.me">
 
 <style>
 * {
@@ -35,7 +38,7 @@ body {
   z-index: 9999;
 }
 
-/* TOPO (IMAGEM) */
+/* IMAGEM TOPO */
 .top {
   height: 58vh;
   background: url('17.jpg') center/cover no-repeat;
@@ -51,12 +54,12 @@ body {
   background: linear-gradient(to bottom, transparent, #000);
 }
 
-/* PARTE DE BAIXO */
+/* PARTE INFERIOR */
 .bottom {
   height: 42vh;
   background: #000;
   display: flex;
-  align-items: flex-start; /* SUBIU O BLOCO */
+  align-items: flex-start;
   justify-content: center;
   padding: 10px 20px 20px;
 }
@@ -96,7 +99,6 @@ p {
   margin-bottom: 14px;
 }
 
-/* CHECK */
 .check {
   display: flex;
   align-items: center;
@@ -123,17 +125,11 @@ button {
   background: linear-gradient(135deg, #ff006f, #ff9800);
   color: #fff;
   box-shadow: 0 8px 25px rgba(255,0,111,0.5);
+  transition: 0.2s;
 }
 
 button:active {
   transform: scale(0.96);
-}
-
-.loader {
-  margin-top: 10px;
-  display: none;
-  font-size: 0.8rem;
-  color: #aaa;
 }
 
 .footer {
@@ -146,7 +142,7 @@ button:active {
 
 <body>
 
-<!-- BLOQUEIO PARA DESKTOP -->
+<!-- BLOQUEIO DESKTOP -->
 <div class="desktop-block" id="desktopBlock">
   <div>
     <h2>Acesse pelo celular</h2>
@@ -159,7 +155,7 @@ button:active {
 <div class="bottom">
   <div class="card" id="card">
 
-    <h1>ACESSO PARA MAIORES DE 18</h1>
+    <h1>ACESSO TOTAL</h1>
     <p>Confirme que você tem idade legal para continuar.</p>
 
     <div class="check">
@@ -167,11 +163,7 @@ button:active {
       <span>Não sou robô</span>
     </div>
 
-    <button id="btn">Tenho +18 anos</button>
-
-    <div class="loader" id="loader">
-      Verificando...
-    </div>
+    <button id="btn">Continuar</button>
 
     <div class="footer">
       Ao continuar você declara que tem pelo menos 18 anos
@@ -183,10 +175,9 @@ button:active {
 <script>
 const card = document.getElementById('card');
 const btn = document.getElementById('btn');
-const loader = document.getElementById('loader');
 const desktopBlock = document.getElementById('desktopBlock');
 
-/* DETECTA DESKTOP */
+/* DETECTA MOBILE */
 function isMobile() {
   return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 }
@@ -195,18 +186,22 @@ if (!isMobile()) {
   desktopBlock.style.display = 'flex';
 }
 
-/* DELAY 2s */
+/* ANIMAÇÃO COM DELAY */
 setTimeout(() => {
   card.classList.add('show');
 }, 2000);
 
+/* REDIRECIONAMENTO INTELIGENTE */
 btn.addEventListener('click', () => {
-  btn.style.display = 'none';
-  loader.style.display = 'block';
+
+  btn.innerText = "Acessando...";
+  btn.style.opacity = "0.7";
+  btn.style.pointerEvents = "none";
 
   setTimeout(() => {
     window.location.href = "https://t.me/KettFreris_bot";
-  }, 1500);
+  }, 100);
+
 });
 </script>
 
